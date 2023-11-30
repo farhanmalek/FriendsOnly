@@ -1,14 +1,22 @@
-import passport from 'passport';
-import { Router } from 'express';
+import passportConfig from "../passportConfig.js";
+import passport from "passport"
+import { Router } from "express";
 
-const loginRoute = Router();
+const loginRouter = Router();
+passportConfig(passport);
 
-//Route to login a registered user.
-loginRoute.post(
-    "/login",
-    passport.authenticate("local", {
-      successRedirect: "/",
-      failureRedirect: "/login"
-    })
-  );
-export default loginRoute
+loginRouter.post("/", (req, res, next) => {
+        passport.authenticate("local", (err, user, info) => {
+          if (err) throw err;
+          if (!user) res.send(info.message);
+          else {
+            req.logIn(user, (err) => {
+              if (err) throw err;
+              res.send("Successfully Authenticated");
+            });
+          }
+        })(req, res, next);
+
+})
+
+export default loginRouter;

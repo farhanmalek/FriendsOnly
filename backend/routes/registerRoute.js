@@ -22,9 +22,8 @@ registerRoute.post("/", async (req, res) => {
     bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
       if (err) {
         return res.status(500).send({ message: err.message });
-      } else {
-        //Check if that email is already registered
-        const userExists = await Users.find(req.body.email);
+      } else {   
+        const userExists = await Users.findOne({email: req.body.email});
         if (userExists) {
           res.status(400).send({ message: "User Already Exists! " });
         } else {

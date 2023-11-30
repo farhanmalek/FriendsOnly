@@ -3,80 +3,52 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import dotenv from "dotenv";
-import passport from 'passport';
-import passportLocal from 'passport-local';
-import { Users } from './models/users.js';
+import passport from "passport";
 import session from "express-session";
 import registerRoute from "./routes/registerRoute.js";
-import loginRoute from "./routes/loginRoute.js"
+import loginRouter from "./routes/loginRoute.js";
 
 dotenv.config();
+//generic middleware
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 //Passport Auth middleware
-app.use(session({ secret: "cats", resave: false, saveUninitialized: true }));
+app.use(
+  session({ secret: "farhansapp", resave: false, saveUninitialized: true })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
-const LocalStrategy = passportLocal.Strategy;
- passport.use(
-    new LocalStrategy(async (username, password, done) => {
-      try {
-        const user = await Users.findOne({ username: username });
-        if (!user) {
-          return done(null, false, { message: "Incorrect username" });
-        };
-        if (user.password !== password) {
-          return done(null, false, { message: "Incorrect password" });
-        };
-        return done(null, user);
-      } catch(err) {
-        return done(err);
-      };
-    })
-  );
-
- passport.serializeUser((user, done) => {
-    done(null, user.id);
-  });
-
-  passport.deserializeUser(async (id, done) => {
-    try {
-      const user = await Users.findById(id);
-      done(null, user);
-    } catch(err) {
-      done(err);
-    };
+//Access to current user stored in session in all views
+app.use((req, res, next) => {
+    res.locals.currentUser = req.user;
+    next();
   });
 
 //Test Route
 app.get("/", (req, res) => {
-    res.send("Hello World!");
+  res.send("Hello World!");
 });
-
-//Routes
 //Register Route
-app.use("/register", registerRoute)
-//Login Route
-app.use("/login", loginRoute)
-
-
-
-
+app.use("/register", registerRoute);
+// Login Route
+app.use("/login", loginRouter);
 
 //Create Port and Connect to MONGO
 //PORT
 const PORT = process.env.PORT || 5000;
 //Create the server
-mongoose.connect(process.env.MONGO_URL).then(() => {
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
     console.log("MongoDB Connected");
     app.listen(PORT, () => {
-        console.log(`Serving base @ http://localhost:${PORT}`);
+      console.log(`Serving base @ http://localhost:${PORT}`);
     });
-}).catch((error) => {
+  })
+  .catch((error) => {
     console.log(error, "Failed DB connection");
-}); //Connect to MongoDB
-
-
+  }); //Connect to MongoDB
