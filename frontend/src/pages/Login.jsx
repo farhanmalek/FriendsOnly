@@ -1,11 +1,10 @@
-
 import axios from "axios";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [formData, setFormData] = useState({
-    email: "",
+    username: "",
     password: "",
   });
   const formRef = useRef(null);
@@ -24,19 +23,25 @@ function Login() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      if (formData.password !== e.target.passwordConfirm.value) {
-        setMessage("Passwords do not match!");
-        formRef.current.reset();
-        return;
-      }
-      const response = await axios.post("http://localhost:5000/login", formData);
+      console.log(formData);
+      const response = await axios.post(
+        "http://localhost:5000/login",
+        formData,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        },
+    
+      );
       setMessage(response.data.message);
       setTimeout(() => {
         navigate("/");
       }, 2000);
     } catch (error) {
       console.log(error);
-      setMessage(error.response.data.message);
+      setMessage(error.response.data);
     }
     formRef.current.reset();
   };
@@ -53,11 +58,11 @@ function Login() {
             type="text"
             placeholder="Enter your email"
             className="p-1 rounded-md"
-            name="email"
+            name="username"
             onChange={handleInputChange}
             required
           />
-    
+
           <input
             type="password"
             placeholder="Enter your password"
@@ -66,12 +71,18 @@ function Login() {
             onChange={handleInputChange}
             required
           />
-     
+
           <button className="bg-blue-500 hover:bg-blue-300 text-white font-bold py-2 px-4 rounded">
             Login
           </button>
         </form>
-        <p className={`ml-2${message === "Login successful!" ? "text-green-700" : "text-red-700"}`}>{message}</p>
+        <p
+          className={`ml-2${
+            message === "Login successful!" ? "text-green-700" : "text-red-700"
+          }`}
+        >
+          {message}
+        </p>
       </div>
     </div>
   );

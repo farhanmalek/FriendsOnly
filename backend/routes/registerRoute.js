@@ -7,6 +7,8 @@ const registerRoute = Router();
 //Route to create a registered user.
 registerRoute.post("/", async (req, res) => {
   let member = "member";
+  //convert email to lowercase to store in DB
+  req.body.email = req.body.email.toLowerCase();
   try {
     if (
       !req.body.email ||

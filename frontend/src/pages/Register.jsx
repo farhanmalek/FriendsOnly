@@ -30,13 +30,20 @@ function Register() {
         formRef.current.reset();
         return;
       }
-      const response = await axios.post("http://localhost:5000/register", formData);
+      const response = await axios.post("http://localhost:5000/register", {
+        email: formData.email,
+        firstname: formData.firstname,
+        lastname: formData.lastname,
+        password: formData.password,
+      },
+      {
+        withCredentials: true,
+      });
       setMessage(response.data.message);
       setTimeout(() => {
         navigate("/login");
       }, 2000);
     } catch (error) {
-      console.log(error);
       setMessage(error.response.data.message);
     }
     formRef.current.reset();

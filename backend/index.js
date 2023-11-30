@@ -7,18 +7,24 @@ import passport from "passport";
 import session from "express-session";
 import registerRoute from "./routes/registerRoute.js";
 import loginRouter from "./routes/loginRoute.js";
+import cookieParser from "cookie-parser";
+
 
 dotenv.config();
 //generic middleware
 const app = express();
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors( {
+  origin: "http://localhost:5173", 
+  credentials: true,
+}));
+
 
 //Passport Auth middleware
 app.use(
   session({ secret: "farhansapp", resave: false, saveUninitialized: true })
 );
+app.use(cookieParser("farhansapp"));
 app.use(passport.initialize());
 app.use(passport.session());
 

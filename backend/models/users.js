@@ -4,7 +4,7 @@ const UserSchema = mongoose.Schema(
   {
     email: {
       type: String,
-
+      collation: { locale: 'en', strength: 1 },
       trim: true,
       minlength: 3,
     },

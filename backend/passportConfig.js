@@ -5,6 +5,7 @@ import { Strategy } from "passport-local";
 export default function (passport) {
   passport.use(
     new Strategy(async (username, password, done) => {
+      username = username.toLowerCase();
       try {
         const user = await Users.findOne({ email: username });
         if (!user) {
@@ -17,7 +18,7 @@ export default function (passport) {
           // passwords do not match!
           return done(null, false, { message: "Incorrect password" });
         }
-        return done(null, user);
+        return done(null, user, { message: "Logged In Successfully" });
       } catch (err) {
         return done(err);
       }
