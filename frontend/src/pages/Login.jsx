@@ -1,8 +1,15 @@
 import axios from "axios";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import {useContext} from "react";
+import LoginContext from "../Contexts/LoginContext";
 
 function Login() {
+  const {getUserData} = useContext(LoginContext);
+
+
+
+
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -37,6 +44,7 @@ function Login() {
       );
       setMessage(response.data.message);
       setTimeout(() => {
+        getUserData();
         navigate("/");
       }, 2000);
     } catch (error) {

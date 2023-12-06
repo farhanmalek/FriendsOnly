@@ -7,6 +7,8 @@ import passport from "passport";
 import session from "express-session";
 import registerRoute from "./routes/registerRoute.js";
 import loginRouter from "./routes/loginRoute.js";
+import logoutRouter from "./routes/logoutRoute.js";
+import proRouter from "./routes/proRoute.js";
 import cookieParser from "cookie-parser";
 
 
@@ -22,26 +24,25 @@ app.use(cors( {
 
 //Passport Auth middleware
 app.use(
-  session({ secret: "farhansapp", resave: false, saveUninitialized: true })
+  session({ secret: "farhansapp", resave: false, saveUninitialized: false, cookie: { maxAge: 86400000 }, name: "cookie" })
 );
 app.use(cookieParser("farhansapp"));
 app.use(passport.initialize());
 app.use(passport.session());
 
-//Access to current user stored in session in all views
-app.use((req, res, next) => {
-    res.locals.currentUser = req.user;
-    next();
-  });
 
 //Test Route
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send(req.user);
 });
 //Register Route
 app.use("/register", registerRoute);
 // Login Route
 app.use("/login", loginRouter);
+//Logout Route
+app.use("/logout", logoutRouter);
+//Upgrade to Pro Member
+app.use("/pro", proRouter);
 
 //Create Port and Connect to MONGO
 //PORT

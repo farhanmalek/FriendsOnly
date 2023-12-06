@@ -1,10 +1,11 @@
 import { Users } from "./models/users.js";
 import bcrypt from "bcryptjs";
-import { Strategy } from "passport-local";
+import passportLocal from "passport-local";
 
+const LocalStrategy = passportLocal.Strategy;
 export default function (passport) {
   passport.use(
-    new Strategy(async (username, password, done) => {
+    new LocalStrategy(async (username, password, done) => {
       username = username.toLowerCase();
       try {
         const user = await Users.findOne({ email: username });
@@ -33,7 +34,7 @@ export default function (passport) {
   //user info from req.user where ever in app
   passport.deserializeUser(async (id, done) => {
     try {
-      const user = await Users.findById(id);
+      const user = await Users.findById({ _id: id });
       done(null, user);
     } catch (err) {
       done(err);
