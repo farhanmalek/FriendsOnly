@@ -31,8 +31,8 @@ registerRoute.post("/", async (req, res) => {
         } else {
           const newUser = {
             email: req.body.email,
-            firstname: req.body.first,
-            lastname: req.body.last,
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
             password: hashedPassword,
             memberStatus: member,
           };

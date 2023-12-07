@@ -9,6 +9,8 @@ import registerRoute from "./routes/registerRoute.js";
 import loginRouter from "./routes/loginRoute.js";
 import logoutRouter from "./routes/logoutRoute.js";
 import proRouter from "./routes/proRoute.js";
+import getPostsRouter from "./routes/getPosts.js";
+import createPostRouter from "./routes/createPost.js";
 import cookieParser from "cookie-parser";
 
 
@@ -43,6 +45,10 @@ app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);
 //Upgrade to Pro Member
 app.use("/pro", proRouter);
+//Get all Posts
+app.use("/posts", getPostsRouter);
+//Create a Post
+app.use("/createPost", createPostRouter);
 
 //Create Port and Connect to MONGO
 //PORT
