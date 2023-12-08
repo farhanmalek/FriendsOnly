@@ -51,7 +51,7 @@ function Register() {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className=" w-[85vw] h-[45vh] bg-blue-200 rounded-md shadow-lg flex flex-col">
+      <div className=" w-[500px] min-w-[300px] ml-3 mr-3  bg-blue-200 rounded-md shadow-lg flex flex-col">
         <form
           className="flex flex-col gap-2 justify-evenly rounded-sm mt-2 p-2"
           onSubmit={handleFormSubmit}

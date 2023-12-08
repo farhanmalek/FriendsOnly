@@ -23,7 +23,7 @@ getPostsRouter.get("/", async (req, res) => {
         
               }
             }
-          ]);
+          ]).sort({ createdAt: -1 });
         res.status(200).send(postWithUser);
         
     } catch (error) {

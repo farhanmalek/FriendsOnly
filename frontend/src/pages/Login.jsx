@@ -15,7 +15,7 @@ function Login() {
     password: "",
   });
   const formRef = useRef(null);
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState();
   const navigate = useNavigate();
 
   //Handle storing input values into the formData state.
@@ -30,7 +30,6 @@ function Login() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      console.log(formData);
       const response = await axios.post(
         "http://localhost:5000/login",
         formData,
@@ -42,21 +41,23 @@ function Login() {
         },
     
       );
+      if(response.status === 200) {
       setMessage(response.data.message);
       setTimeout(() => {
         getUserData();
         navigate("/");
-      }, 2000);
+      }, 1500);
+    } 
     } catch (error) {
       console.log(error);
-      setMessage(error.response.data);
+      setMessage(error.response.data.message);
     }
     formRef.current.reset();
   };
 
   return (
     <div className="flex justify-center items-center h-screen">
-      <div className=" w-[85vw]  bg-blue-200 rounded-md shadow-lg flex flex-col">
+      <div className=" w-[500px] min-w-[300px] ml-3 mr-3  bg-blue-200 rounded-md shadow-lg flex flex-col">
         <form
           className="flex flex-col gap-2 justify-evenly rounded-sm mt-2 p-2"
           onSubmit={handleFormSubmit}

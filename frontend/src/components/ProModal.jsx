@@ -29,8 +29,8 @@ function ProModal({ proModal, setProModal }) {
   };
 
   return (
-    <div className="w-screen h-screen bg-black bg-opacity-50 absolute top-0 left-0 flex justify-center items-center ">
-      <div className="bg-white w-[50vw] h-[50vh] flex flex-col justify-center items-center rounded-lg gap-2">
+    <div className="w-screen h-[100vh] bg-black bg-opacity-50 absolute top-0 left-0 flex justify-center items-center ">
+<div className="bg-white w-[80vw] h-auto md:max-w-[600px] flex flex-col justify-center items-center rounded-lg p-4 gap-1">
         <h1 className="text-2xl font-bold">
           Become a Pro member to create posts!
         </h1>
@@ -42,6 +42,7 @@ function ProModal({ proModal, setProModal }) {
           name="code"
           onChange={(e) => setCode(e.target.value)}
         />
+        <div className="flex justify-evenly w-[80%] max-w-[350px]">
         <button
           className="bg-green-600 p-1 rounded  hover:bg-green-300"
           onClick={handleCodeGuess}
@@ -54,6 +55,9 @@ function ProModal({ proModal, setProModal }) {
         >
           Cancel
         </button>
+
+        </div>
+        
         {message.includes("Invalid") ? (
           <p className="text-red-600">{message}</p>
         ) : (

@@ -4,6 +4,7 @@ import LoginContext from "../Contexts/LoginContext";
 import axios from "axios";
 import ProModal from "../components/ProModal";
 import CreatePost from "../components/CreatePost";
+import {Link} from "react-router-dom"
 
 function RootLayout() {
   const navigate = useNavigate();
@@ -37,28 +38,28 @@ function RootLayout() {
 
   return (
     <div>
-      <header className="w-screen h-[10vh] bg-blue-900 flex justify-between items-center ">
+      <header className=" min-h-[10vh] bg-teal-900 flex justify-between items-center ">
         <h1 className="font-bold text-xl ml-2">
-          Friends<span className="text-white">Only</span>
+          <Link to="/">Friends<span className="text-white">Only</span></Link>
         </h1>
         <div className="flex gap-2 mr-2">
           {!user ? (
             <button
-              className="bg-blue-500 p-1 rounded hover:bg-blue-300"
+              className="bg-teal-500 p-1 rounded hover:bg-teal-300"
               onClick={() => navigate("/register")}
             >
               Register
             </button>
           ) : user.memberStatus === "member" ? (
             <button
-              className="bg-blue-500 p-1 rounded hover:bg-blue-300"
+              className="bg-teal-500 p-1 rounded hover:bg-teal-300"
               onClick={handleProModal}
             >
               Upgrade to Pro
             </button>
           ) : (user.memberStatus === "pro" || user.memberStatus === "admin") && (
             <button
-              className="bg-blue-500 p-1 rounded hover:bg-blue-300"
+              className="bg-teal-500 p-1 rounded hover:bg-teal-300"
               onClick={handleCreatePost}
             >
               Create Post!
@@ -67,14 +68,14 @@ function RootLayout() {
 
           {user ? (
             <button
-              className="bg-blue-500 p-1 rounded  hover:bg-blue-300"
+              className="bg-teal-500 p-1 rounded  hover:bg-teal-300"
               onClick={handleLogout}
             >
               Logout
             </button>
           ) : (
             <button
-              className="bg-blue-500 p-1 rounded  hover:bg-blue-300"
+              className="bg-teal-500 p-1 rounded  hover:bg-teal-300"
               onClick={() => navigate("/login")}
             >
               Login
