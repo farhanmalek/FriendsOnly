@@ -1,8 +1,10 @@
 import axios from "axios";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import { useSnackbar } from "notistack";
 
 function Register() {
+  const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({
     email: "",
     firstname: "",
@@ -10,7 +12,7 @@ function Register() {
     password: "",
   });
   const formRef = useRef(null);
-  const [message, setMessage] = useState("");
+ 
   const navigate = useNavigate();
 
   //Handle storing input values into the formData state.
@@ -26,7 +28,7 @@ function Register() {
     e.preventDefault();
     try {
       if (formData.password !== e.target.passwordConfirm.value) {
-        setMessage("Passwords do not match!");
+        enqueueSnackbar("Passwords do not match!", { variant: "error" });
         formRef.current.reset();
         return;
       }
@@ -39,12 +41,11 @@ function Register() {
       {
         withCredentials: true,
       });
-      setMessage(response.data.message);
-      setTimeout(() => {
+      enqueueSnackbar("Registration successful!", { variant: "success" });
         navigate("/login");
-      }, 2000);
+ 
     } catch (error) {
-      setMessage(error.response.data.message);
+     enqueueSnackbar(`${error.response.message}`, { variant: "error" });
     }
     formRef.current.reset();
   };
@@ -100,7 +101,7 @@ function Register() {
             Register
           </button>
         </form>
-        <p className={`ml-2${message === "Registration successful!" ? "text-green-700" : "text-red-700"}`}>{message}</p>
+      
       </div>
     </div>
   );

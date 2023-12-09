@@ -2,12 +2,12 @@ import { useState } from "react";
 import axios from "axios";
 import { useContext } from "react";
 import LoginContext from "../Contexts/LoginContext";
+import { useSnackbar } from "notistack";
 
 function ProModal({ proModal, setProModal }) {
   const { user } = useContext(LoginContext);
-
+  const { enqueueSnackbar } = useSnackbar();
   const [code, setCode] = useState("");
-  const [message, setMessage] = useState("");
 
   const handleCodeGuess = async () => {
     try {
@@ -17,14 +17,15 @@ function ProModal({ proModal, setProModal }) {
         { withCredentials: true }
       );
       if (response.status === 200) {
-        setMessage("You are now a pro member!");
         setProModal(!proModal);
-        window.location.reload(true);
-      } else {
-        setMessage("Wrong code!");
-      }
+        enqueueSnackbar("You are now a Pro member!", { variant: "success" });
+        setTimeout(() => {
+            window.location.reload(true);
+        }, 2000);
+      } 
     } catch (error) {
       console.log(error, "Failed from server");
+      enqueueSnackbar("Invalid code!", { variant: "error" });
     }
   };
 
@@ -57,12 +58,7 @@ function ProModal({ proModal, setProModal }) {
         </button>
 
         </div>
-        
-        {message.includes("Invalid") ? (
-          <p className="text-red-600">{message}</p>
-        ) : (
-          <p className="text-green-600">{message}</p>
-        )}
+      
       </div>
     </div>
   );

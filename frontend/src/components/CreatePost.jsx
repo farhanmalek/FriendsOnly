@@ -1,9 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
+import { useSnackbar } from "notistack";
 
 function CreatePost({ setCreatePost, createPost, user }) {
   const [post, setPost] = useState({ title: "", body: "" });
-  const [message, setMessage] = useState("");
+  const { enqueueSnackbar } = useSnackbar();
 
   const handlePostCreation = async () => {
     try {
@@ -13,16 +14,17 @@ function CreatePost({ setCreatePost, createPost, user }) {
       });
       if (sendPostResponse.status === 201) {
         setCreatePost(!createPost);
-        setMessage("Post created successfully!");
 
       }
+      enqueueSnackbar("Post created!", { variant: "success" });
       setTimeout(() => {
-      window.location.reload(true);
-      },1000);
+          window.location.reload(true);
+      }, 2000);
 
 
     } catch (error) {
       console.log(error);
+      enqueueSnackbar(`${error.response.data.message}`, { variant: "error" });
     }
   };
 
@@ -60,7 +62,6 @@ function CreatePost({ setCreatePost, createPost, user }) {
             Cancel
           </button>
         </div>
-        <p className="text-green-600">{message}</p>
       </div>
     </div>
   );

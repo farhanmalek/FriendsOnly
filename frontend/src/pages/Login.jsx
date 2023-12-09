@@ -1,21 +1,18 @@
 import axios from "axios";
 import { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import {useContext} from "react";
+import { useContext } from "react";
 import LoginContext from "../Contexts/LoginContext";
+import { useSnackbar } from "notistack";
 
 function Login() {
-  const {getUserData} = useContext(LoginContext);
-
-
-
-
+  const { getUserData } = useContext(LoginContext);
+  const { enqueueSnackbar } = useSnackbar();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
   });
   const formRef = useRef(null);
-  const [message, setMessage] = useState();
   const navigate = useNavigate();
 
   //Handle storing input values into the formData state.
@@ -38,19 +35,17 @@ function Login() {
           headers: {
             "Content-Type": "application/json",
           },
-        },
-    
+        }
       );
-      if(response.status === 200) {
-      setMessage(response.data.message);
-      setTimeout(() => {
+      if (response.status === 200) {
         getUserData();
+        enqueueSnackbar("Login successful!", { variant: "success" });
         navigate("/");
-      }, 1500);
-    } 
+      }
     } catch (error) {
       console.log(error);
-      setMessage(error.response.data.message);
+      enqueueSnackbar(`${error.response.data.message}`, { variant: "error" });
+    
     }
     formRef.current.reset();
   };
@@ -85,13 +80,6 @@ function Login() {
             Login
           </button>
         </form>
-        <p
-          className={`ml-2${
-            message === "Login successful!" ? "text-green-700" : "text-red-700"
-          }`}
-        >
-          {message}
-        </p>
       </div>
     </div>
   );
