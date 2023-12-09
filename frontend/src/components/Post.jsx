@@ -8,7 +8,7 @@ function Post({post, user}) {
   const formattedDate = dayjs(day).format("DD/MM/YYYY h:m:sa");
 
   return (
-    <div className="border border-black max-w-[85vw] min-h-[20vh] rounded-md shadow-md bg-blue-200 flex flex-col gap-1 text-xs sm:text">
+    <div className="border border-black w-[65vw] min-h-[20vh] rounded-md shadow-md bg-gray-100 flex flex-col gap-1 text-xs sm:text">
       <div className="flex justify-between mr-2 ml-2 mt-1">
         <p className="font-bold italic">{user === "" ? "Login to view the title of this post" : post.title}</p>
         <p className="hidden sm:block sm:italic">{formattedDate}</p>

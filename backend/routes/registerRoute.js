@@ -18,7 +18,7 @@ registerRoute.post("/", async (req, res) => {
     ) {
       return res.status(400).send({ message: "Required field(s) missing" });
     }
-    if (req.body.email === "farhan@gmail.com") {
+    if (req.body.email === "admin@gmail.com") {
       member = "admin";
     }
     bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
