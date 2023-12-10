@@ -26,10 +26,10 @@ app.use(cors( {
 
 
 //Passport Auth middleware
-app.use(
-  session({ secret: "farhansapp", resave: false, saveUninitialized: false, cookie: { sameSite:"none",secure:true, domain: ".vercel.app", path:"/" }, name: "cookie" })
-);
 app.use(cookieParser("farhansapp"));
+app.use(
+  cookieSession({ secret: "farhansapp", resave: false, saveUninitialized: false, cookie: { sameSite:"none",secure:true, domain: ".vercel.app", path:"/" }, name: "cookie" })
+);
 app.use(passport.initialize());
 app.use(passport.session());
 
