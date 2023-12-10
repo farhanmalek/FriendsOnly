@@ -8,7 +8,7 @@ function CreatePost({ setCreatePost, createPost, user }) {
 
   const handlePostCreation = async () => {
     try {
-      const sendPostResponse = await axios.post("http://localhost:5000/createPost", {
+      const sendPostResponse = await axios.post("https://friends-only-eosin.vercel.app/createPost", {
         user,
         post,
       });
