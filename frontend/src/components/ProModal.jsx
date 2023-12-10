@@ -12,7 +12,7 @@ function ProModal({ proModal, setProModal }) {
   const handleCodeGuess = async () => {
     try {
       const response = await axios.put(
-        "https://friends-only-eosin.vercel.app/pro",
+        "https://api-friends-only.vercel.app/pro",
         { code: code, user: user },
         { withCredentials: true }
       );

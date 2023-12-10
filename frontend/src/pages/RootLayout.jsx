@@ -15,7 +15,7 @@ function RootLayout() {
   //Handle Logout Function
   async function handleLogout() {
     try {
-      const response = await axios.get("https://friends-only-eosin.vercel.app/logout", {
+      const response = await axios.get("https://api-friends-only.vercel.app/logout", {
         withCredentials: true,
         credentials: "same-origin",
       });

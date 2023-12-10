@@ -20,14 +20,14 @@ const app = express();
 app.enable("trust proxy",1);
 app.use(express.json());
 app.use(cors( {
-  origin: "https://friends-only-frontend.vercel.app", 
+  origin: "https://frontend-api-friends-only.vercel.app", 
   credentials: true,
 }));
 
 
 //Passport Auth middleware
 app.use(
-  session({ secret: "farhansapp", resave: false, saveUninitialized: false, cookie: { sameSite:"none",secure:true, domain: ".vercel.app", path:"/" }, name: "cookie" })
+  session({ secret: "farhansapp", resave: false, saveUninitialized: false, cookie: { sameSite:"none",secure:true, domain: "api-friends-only.vercel.app", path:"/" }, name: "cookie" })
 );
 app.use(cookieParser("farhansapp"));
 app.use(passport.initialize());

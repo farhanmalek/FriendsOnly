@@ -11,7 +11,7 @@ export function LoginProvider({children}) {
     const [user, setUser] = useState({});
     const getUserData = async () => {
         try {
-            const data = await axios.get("https://friends-only-eosin.vercel.app/user", {
+            const data = await axios.get("https://api-friends-only.vercel.app/user", {
                 withCredentials: true,
             })
             setUser(data.data);
