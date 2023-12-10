@@ -16,7 +16,7 @@ function Home() {
 async function getAllPosts() {
   try {
     setIsLoading(true);
-    const postGetter = await axios.get("http://localhost:5000/posts");
+    const postGetter = await axios.get("https://friends-only-eosin.vercel.app/posts");
     setAllPosts(postGetter.data);
     
   } catch (error) {

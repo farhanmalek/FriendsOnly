@@ -32,7 +32,7 @@ function Register() {
         formRef.current.reset();
         return;
       }
-      const response = await axios.post("http://localhost:5000/register", {
+      const response = await axios.post("https://friends-only-eosin.vercel.app/register", {
         email: formData.email,
         firstname: formData.firstname,
         lastname: formData.lastname,
