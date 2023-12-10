@@ -17,7 +17,7 @@ import cookieParser from "cookie-parser";
 dotenv.config();
 //generic middleware
 const app = express();
-app.enable("trust proxy");
+app.enable("trust proxy",1);
 app.use(express.json());
 app.use(cors( {
   origin: "https://friends-only-frontend.vercel.app", 
@@ -26,10 +26,10 @@ app.use(cors( {
 
 
 //Passport Auth middleware
-app.use(cookieParser("farhansapp"));
 app.use(
-  cookieSession({ secret: "farhansapp", resave: false, saveUninitialized: false, cookie: { sameSite:"none",secure:true, domain: ".vercel.app", path:"/" }, name: "cookie" })
+  session({ secret: "farhansapp", resave: false, saveUninitialized: false, cookie: { sameSite:"none",secure:true, domain: ".vercel.app", path:"/" }, name: "cookie" })
 );
+app.use(cookieParser("farhansapp"));
 app.use(passport.initialize());
 app.use(passport.session());
 
