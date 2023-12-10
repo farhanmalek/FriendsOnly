@@ -6,7 +6,6 @@ const logoutRouter = Router();
 
 passportConfig(passport);
 logoutRouter.get("/", (req, res) => {
-  req.logout();
     res.clearCookie("cookie")
     req.session.destroy(function (err) {
         res.send("logged out!"); 

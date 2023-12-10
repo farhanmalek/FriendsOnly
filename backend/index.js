@@ -27,7 +27,7 @@ app.use(cors( {
 
 //Passport Auth middleware
 app.use(
-  session({ secret: "farhansapp", resave: false, saveUninitialized: false, cookie: { maxAge: 86400000, sameSite:"none",secure:true }, name: "cookie" })
+  session({ secret: "farhansapp", resave: false, saveUninitialized: false, cookie: { sameSite:"none",secure:true }, name: "cookie" })
 );
 app.use(cookieParser("farhansapp"));
 app.use(passport.initialize());
