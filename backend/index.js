@@ -35,6 +35,7 @@ app.use(passport.session());
 
 //Test Route
 app.get("/", (req, res) => {
+  console.log("Server is running")
   res.send(req.user);
 });
 //Register Route
