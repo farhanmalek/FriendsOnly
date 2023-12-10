@@ -19,7 +19,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use(cors( {
-  origin: "https://friends-only-frontend.vercel.app", 
+  origin: "https://friends-only-frontend-farhanmaleks-projects.vercel.app/", 
   credentials: true,
 }));
 
